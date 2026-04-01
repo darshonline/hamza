@@ -5,174 +5,291 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إتقان الهمزة | منصة لغتي التعليمية</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* تنسيقات إضافية للتبويب الجديد والأهداف */
-        .intro-section { margin-bottom: 30px; line-height: 1.8; }
-        .intro-section p { font-size: 1.1rem; color: #444; text-align: justify; }
-        
-        .goals-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .goal-card { 
-            background: #f8f9fa; 
-            border: 1px solid #e9ecef; 
-            border-radius: 12px; 
-            padding: 20px; 
-            transition: transform 0.3s;
-        }
-        .goal-card:hover { transform: translateY(-5px); border-color: var(--secondary-color); }
-        .goal-card h3 { color: var(--secondary-color); font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .goal-card ul { list-style: none; padding: 0; }
-        .goal-card ul li { margin-bottom: 10px; position: relative; padding-right: 25px; }
-        .goal-card ul li::before { content: "🎯"; position: absolute; right: 0; top: 0; }
-
-        /* تنسيق التبويبات */
-        .tabs-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; flex-wrap: wrap; }
-        .tab-btn { padding: 12px 20px; border: none; background: #e0e0e0; cursor: pointer; border-radius: 8px; font-family: 'Cairo'; font-weight: bold; transition: 0.3s; font-size: 0.95rem; }
-        .tab-btn.active { background: var(--secondary-color); color: white; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2); }
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        
-        @media (max-width: 768px) { .goals-container { grid-template-columns: 1fr; } }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- شريط التقدم في أعلى الصفحة -->
+    <div class="progress-bar-wrap"><div class="progress-bar" id="readingProgress"></div></div>
+
     <header>
         <div class="container header-flex">
-	    <div class="logo-container">
-            <img src="assets/logo.png" alt="شعار المنصة" class="site-logo">
+            <div class="logo-container">
+                <div class="logo-placeholder">لغتي</div>
+            </div>
+            <div class="header-text">
+                <h1>قواعد الهمزة المتوسطة والمتطرفة</h1>
+                <p class="subtitle">دليل شامل لطلاب الصف الأول الإعدادي</p>
+                <p class="author-tag">إعداد وتطوير: <strong>محمد مصطفى</strong></p>
+            </div>
         </div>
-
-            <h1>قواعد الهمزة المتوسطة والمتطرفة</h1>
-            <p class="subtitle">دليل شامل لطلاب الصف الأول الإعدادي</p>
-	    <p>إعداد وتطوير محمد مصطفى</p>
+        <!-- إحصائيات سريعة في الهيدر -->
+        <div class="header-stats">
+            <div class="stat-pill">📚 5 قواعد أساسية</div>
+            <div class="stat-pill">🎬 2 فيديو شرح</div>
+            <div class="stat-pill">🧠 7 أسئلة تفاعلية</div>
+            <div class="stat-pill">📄 ملخص PDF</div>
         </div>
     </header>
 
     <main class="container">
-        <!-- أزرار التبويبات الخمسة -->
-        <nav class="tabs-container">
-            <button class="tab-btn active" onclick="openTab(event, 'lesson-intro')">مقدمة وأهداف الدرس</button>
-            <button class="tab-btn" onclick="openTab(event, 'middle-hamza')">الهمزة المتوسطة</button>
-            <button class="tab-btn" onclick="openTab(event, 'end-hamza')">الهمزة المتطرفة</button>
-            <button class="tab-btn" onclick="openTab(event, 'media-tab')">فيديوهات وصوتيات</button>
-            <button class="tab-btn" onclick="openTab(event, 'quiz-tab')">أسئلة واختبارات</button>
+
+        <!-- التبويبات مع أيقونات -->
+        <nav class="tabs-container" role="tablist">
+            <button class="tab-btn active" onclick="openTab(event, 'lesson-intro')" role="tab" aria-selected="true">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">المقدمة والأهداف</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'middle-hamza')" role="tab">
+                <span class="tab-icon">🔤</span>
+                <span class="tab-label">الهمزة المتوسطة</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'end-hamza')" role="tab">
+                <span class="tab-icon">🔚</span>
+                <span class="tab-label">الهمزة المتطرفة</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'media-tab')" role="tab">
+                <span class="tab-icon">🎬</span>
+                <span class="tab-label">الوسائط التعليمية</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'quiz-tab')" role="tab">
+                <span class="tab-icon">🧠</span>
+                <span class="tab-label">الاختبار الشامل</span>
+            </button>
         </nav>
 
-        <!-- التبويب الأول: مقدمة وأهداف الدرس -->
+        <!-- ═══════════════════════════════════════════════
+             التبويب الأول: مقدمة وأهداف الدرس
+        ════════════════════════════════════════════════ -->
         <section id="lesson-intro" class="tab-content active">
             <div class="card">
-                <div class="intro-section">
-                    <h2 style="color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px;">📝 الجزء الأول: مقدمة الدرس</h2>
-                    <p>
-                        تُعد الهمزة من أهم القواعد الإملائية التي يحتاجها الطالب لكتابة الكلمات العربية بشكل صحيح ودقيق. ينقسم موضوعنا اليوم إلى قسمين أساسيين:
-                        <br><br>
-                        <strong>• الهمزة المتوسطة:</strong> وهي التي تأتي في وسط الكلمة، وسنتعلم كيف نكتبها بشكل صحيح بناءً على حركتها وحركة الحرف الذي يسبقها، سواء كانت على ألف، أو واو، أو ياء (نبرة)، أو مفردة على السطر.
-                        <br>
-                        <strong>• الهمزة المتطرفة:</strong> وهي التي تقع في آخر الكلمة، وسنعرف كيف يتحدد رسمها بناءً على حركة الحرف الذي قبلها فقط.
-                        <br><br>
-                        هدفنا من هذا الدرس هو إتقان مهارة الرسم الإملائي، والتمييز بين الحالات المختلفة لكتابة الهمزة لتجنب الأخطاء الشائعة في الكتابة.
-                    </p>
+                <!-- بطاقة ترحيبية -->
+                <div class="welcome-banner">
+                    <div class="welcome-icon">✍️</div>
+                    <div>
+                        <h2>مرحباً بك في درس الهمزة!</h2>
+                        <p>ستتعلم في هذا الدرس كيف تكتب الهمزة بشكل صحيح في أي موضع من الكلمة. اتبع الخطوات بالترتيب للحصول على أفضل النتائج.</p>
+                    </div>
                 </div>
 
-                <div class="intro-section">
-                    <h2 style="color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px;">💡 الجزء الثاني: أهداف التعلم</h2>
-                    <p>تتمحور أهداف التعلم في هذا الدرس حول إتقان قواعد كتابة الهمزة في حالتيها المتوسطة والمتطرفة، وتفصيلها كالتالي:</p>
-                    
-                    <div class="goals-container">
-                        <!-- أهداف الهمزة المتوسطة -->
-                        <div class="goal-card">
-                            <h3>أولاً: أهداف الهمزة المتوسطة</h3>
-                            <ul>
-                                <li>كتابة الهمزة المتوسطة بشكل صحيح في مختلف الكلمات.</li>
-                                <li>تعداد المواضع المختلفة التي تأتي فيها الهمزة المتوسطة.</li>
-                                <li>التمييز بين الرسم المشهور وغير المشهور للكلمات.</li>
-                                <li>فهم أثر حركات الهمزة (فتحة، ضمة، كسرة، سكون) على رسمها.</li>
-                            </ul>
+                <div class="section-divider">
+                    <span>📝 الجزء الأول: مقدمة الدرس</span>
+                </div>
+
+                <p class="intro-text">
+                    تُعد الهمزة من أهم القواعد الإملائية التي يحتاجها الطالب لكتابة الكلمات العربية بشكل صحيح ودقيق. ينقسم موضوعنا اليوم إلى قسمين أساسيين:
+                </p>
+
+                <div class="intro-cards-row">
+                    <div class="intro-mini-card green">
+                        <div class="intro-mini-icon">🔤</div>
+                        <h4>الهمزة المتوسطة</h4>
+                        <p>تأتي في وسط الكلمة، وتُكتب بناءً على حركتها وحركة الحرف الذي يسبقها.</p>
+                    </div>
+                    <div class="intro-mini-card orange">
+                        <div class="intro-mini-icon">🔚</div>
+                        <h4>الهمزة المتطرفة</h4>
+                        <p>تقع في آخر الكلمة، وتُرسم بناءً على حركة الحرف الذي قبلها فقط.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span>💡 الجزء الثاني: أهداف التعلم</span>
+                </div>
+
+                <div class="goals-container">
+                    <div class="goal-card">
+                        <h3><span>🟢</span> أولاً: أهداف الهمزة المتوسطة</h3>
+                        <ul>
+                            <li>كتابة الهمزة المتوسطة بشكل صحيح في مختلف الكلمات.</li>
+                            <li>تعداد المواضع المختلفة التي تأتي فيها الهمزة المتوسطة.</li>
+                            <li>التمييز بين الرسم المشهور وغير المشهور للكلمات.</li>
+                            <li>فهم أثر حركات الهمزة على رسمها.</li>
+                        </ul>
+                    </div>
+                    <div class="goal-card">
+                        <h3><span>🟠</span> ثانياً: أهداف الهمزة المتطرفة</h3>
+                        <ul>
+                            <li>إجادة كتابة الهمزة المتطرفة في آخر الكلمة.</li>
+                            <li>تحديد حركة الحرف السابق للهمزة كعامل أساسي للرسم.</li>
+                            <li>تحديد حكم الهمزة المتطرفة في الحالات الاستثنائية.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- خارطة الطريق -->
+                <div class="roadmap-box">
+                    <h3>🗺️ خارطة طريق الدرس</h3>
+                    <div class="roadmap-steps">
+                        <div class="roadmap-step active-step">
+                            <div class="step-num">1</div>
+                            <span>اقرأ المقدمة</span>
                         </div>
-                        <!-- أهداف الهمزة المتطرفة -->
-                        <div class="goal-card">
-                            <h3>ثانياً: أهداف الهمزة المتطرفة</h3>
-                            <ul>
-                                <li>إجادة كتابة الهمزة المتطرفة في آخر الكلمة.</li>
-                                <li>تحديد حركة الحرف السابق للهمزة كعامل أساسي للرسم.</li>
-                                <li>تحديد حكم الهمزة المتطرفة في الحالات الاستثنائية أو العارضة.</li>
-                            </ul>
+                        <div class="roadmap-arrow">←</div>
+                        <div class="roadmap-step">
+                            <div class="step-num">2</div>
+                            <span>الهمزة المتوسطة</span>
+                        </div>
+                        <div class="roadmap-arrow">←</div>
+                        <div class="roadmap-step">
+                            <div class="step-num">3</div>
+                            <span>الهمزة المتطرفة</span>
+                        </div>
+                        <div class="roadmap-arrow">←</div>
+                        <div class="roadmap-step">
+                            <div class="step-num">4</div>
+                            <span>شاهد الفيديوهات</span>
+                        </div>
+                        <div class="roadmap-arrow">←</div>
+                        <div class="roadmap-step">
+                            <div class="step-num">5</div>
+                            <span>اجتاز الاختبار</span>
                         </div>
                     </div>
+                </div>
+
+                <div style="text-align:center; margin-top: 25px;">
+                    <button class="btn btn-primary btn-lg" onclick="openTabByName('middle-hamza')">
+                        ابدأ التعلم الآن ←
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- التبويب الثاني: الهمزة المتوسطة (المحتوى المحدث والمطور) -->
+        <!-- ═══════════════════════════════════════════════
+             التبويب الثاني: الهمزة المتوسطة
+        ════════════════════════════════════════════════ -->
         <section id="middle-hamza" class="tab-content">
             <div class="card">
-                <h2 style="text-align: center; color: #27ae60; margin-bottom: 20px;">الهمزة المتوسطة</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8;">تُقسم حالات الهمزة المتوسطة (التي تقع في وسط الكلمة) إلى خمسة أحوال أساسية تعتمد على حركتها وحركة ما قبلها، وإليك شرحها بالتفصيل:</p>
-
-                <!-- الحالة 1 -->
-                <div class="rule-card">
-                    <h3>1. الهمزة المسبوقة بحرف علة</h3>
-                    <p>لهذه الحالة ثلاث صور فرعية:</p>
-                    <ul class="sub-rule">
-                        <li><strong>المسبوقة بياء ساكنة:</strong> تُرسم دائماً على <span class="example-highlight">نبرة</span> بغض النظر عن حركة الهمزة. أمثلة: (هيئة، بيئة، خطيئة، مشيئتك).</li>
-                        <li><strong>المسبوقة بواو ساكنة أو مشددة:</strong> تُرسم <span class="example-highlight">مفردة على السطر</span> إذا كانت مفتوحة أو مضمومة. أمثلة: (ضوءَك، ضوءُك، توءم، السوءَى).</li>
-                        <li><strong>المسبوقة بألف:</strong> تُرسم <span class="example-highlight">مفردة على السطر</span> إذا كانت الهمزة مفتوحة. أمثلة: (تفاءَل، تضاءَل).</li>
-                    </ul>
+                <div class="tab-header green-header">
+                    <div class="tab-header-icon">🔤</div>
+                    <div>
+                        <h2>الهمزة المتوسطة</h2>
+                        <p>الهمزة التي تقع في وسط الكلمة — لها 5 أحوال أساسية</p>
+                    </div>
                 </div>
 
-                <!-- الحالة 2 -->
+                <!-- الأحوال الخمسة -->
                 <div class="rule-card">
-                    <h3>2. الهمزة الساكنة</h3>
-                    <p>تُرسم على حرف من جنس حركة ما قبلها:</p>
-                    <ul class="sub-rule">
-                        <li>على <strong>ألف</strong> إذا كان ما قبلها مفتوحاً: <span class="example-highlight">رأْي، رأْس</span>.</li>
-                        <li>على <strong>نبرة</strong> إذا كان ما قبلها مكسوراً: <span class="example-highlight">بئْر، ذئْب</span>.</li>
-                        <li>على <strong>واو</strong> إذا كان ما قبلها مضموماً: <span class="example-highlight">يؤْمن، مؤْمن</span>.</li>
-                    </ul>
+                    <div class="rule-number green-num">1</div>
+                    <div class="rule-body">
+                        <h3>الهمزة المسبوقة بحرف علة</h3>
+                        <p>لهذه الحالة ثلاث صور فرعية:</p>
+                        <div class="sub-rules-grid">
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">مسبوقة بياء ساكنة</div>
+                                <div class="sub-rule-result">تُرسم على <span class="example-highlight">نبرة</span> دائماً</div>
+                                <div class="sub-rule-examples">هيئة، بيئة، خطيئة</div>
+                            </div>
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">مسبوقة بواو ساكنة/مشددة</div>
+                                <div class="sub-rule-result">مفردة على <span class="example-highlight">السطر</span></div>
+                                <div class="sub-rule-examples">ضوءَك، توءم</div>
+                            </div>
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">مسبوقة بألف (مفتوحة)</div>
+                                <div class="sub-rule-result">مفردة على <span class="example-highlight">السطر</span></div>
+                                <div class="sub-rule-examples">تفاءَل، تضاءَل</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- الحالة 3 -->
                 <div class="rule-card">
-                    <h3>3. الهمزة المكسورة</h3>
-                    <p>تُرسم على <span class="example-highlight">نبرة مطلقاً</span>، سواء كان ما قبلها ساكناً أو متحركاً. أمثلة: (أسئلة، مسائل، سُئل). كما تُرسم على نبرة إذا جاءت بعدها ياء: <span class="example-highlight">تتوضئِين</span>.</p>
+                    <div class="rule-number green-num">2</div>
+                    <div class="rule-body">
+                        <h3>الهمزة الساكنة</h3>
+                        <p>تُرسم على حرف من جنس حركة ما قبلها:</p>
+                        <div class="sub-rules-grid three-col">
+                            <div class="sub-rule-item highlight-gold">
+                                <div class="sub-rule-label">ما قبلها مفتوح</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">ألف</span></div>
+                                <div class="sub-rule-examples">رأْي، رأْس</div>
+                            </div>
+                            <div class="sub-rule-item highlight-blue">
+                                <div class="sub-rule-label">ما قبلها مكسور</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">نبرة</span></div>
+                                <div class="sub-rule-examples">بئْر، ذئْب</div>
+                            </div>
+                            <div class="sub-rule-item highlight-purple">
+                                <div class="sub-rule-label">ما قبلها مضموم</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">واو</span></div>
+                                <div class="sub-rule-examples">يؤْمن، مؤْمن</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- الحالة 4 -->
                 <div class="rule-card">
-                    <h3>4. الهمزة المضمومة</h3>
-                    <p>تعتمد على ما يأتي بعدها:</p>
-                    <ul class="sub-rule">
-                        <li><strong>إذا لم يأتِ بعدها واو مد:</strong> تُرسم على واو، مثل: <span class="example-highlight">يَرؤُف، أرؤُس</span>.</li>
-                        <li><strong>إذا جاء بعدها واو مد:</strong>
-                            <ul>
-                                <li>تُرسم على نبرة إذا كان ما قبلها يتصل بما بعدها: <span class="example-highlight">مسئول، شئون</span>.</li>
-                                <li>تُرسم على السطر إذا كان ما قبلها لا يتصل: <span class="example-highlight">رءوف، رءوس</span>.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="note-box">💡 ملاحظة: يوجد رسم آخر مشهور بكتابتها على الواو (رؤوس، شؤون).</div>
+                    <div class="rule-number green-num">3</div>
+                    <div class="rule-body">
+                        <h3>الهمزة المكسورة</h3>
+                        <p>تُرسم على <strong>نبرة مطلقاً</strong>، سواء كان ما قبلها ساكناً أو متحركاً.</p>
+                        <div class="examples-row">
+                            <span class="example-badge">أسئلة</span>
+                            <span class="example-badge">مسائل</span>
+                            <span class="example-badge">سُئِل</span>
+                            <span class="example-badge">تتوضئِين</span>
+                        </div>
+                        <div class="golden-rule-box">
+                            ⭐ الكسرة هي أقوى الحركات — وهي السبب في كتابة الهمزة دائماً على نبرة في هذه الحالة.
+                        </div>
+                    </div>
                 </div>
 
-                <!-- الحالة 5 -->
                 <div class="rule-card">
-                    <h3>5. الهمزة المفتوحة</h3>
-                    <ul class="sub-rule">
-                        <li><strong>بدون ألف مد:</strong> تُرسم على حرف يناسب ما قبلها (سأل، لؤي). وإذا كان ما قبلها ساكناً صحيحاً تُرسم على ألف: <span class="example-highlight">يجأر</span>.</li>
-                        <li><strong>إذا جاء بعدها ألف مد:</strong> تُرسم على نبرة إذا كان ما قبلها يتصل (مكافئات)، وعلى السطر إذا لم يتصل (جزءان).</li>
-                    </ul>
-                    <div class="note-box">⭐ الرسم الأفضل والمشهور: تعويضها بـ ألف مدة (آ)، مثل: <span class="example-highlight">مكافآت، قرآن</span>.</div>
+                    <div class="rule-number green-num">4</div>
+                    <div class="rule-body">
+                        <h3>الهمزة المضمومة</h3>
+                        <p>تعتمد على ما يأتي بعدها:</p>
+                        <div class="sub-rules-grid two-col">
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">بدون واو مد بعدها</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">واو</span></div>
+                                <div class="sub-rule-examples">يَرؤُف، أرؤُس</div>
+                            </div>
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">بعدها واو مد + ما قبلها يتصل</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">نبرة</span></div>
+                                <div class="sub-rule-examples">مسئول، شئون</div>
+                            </div>
+                        </div>
+                        <div class="note-box">
+                            💡 <strong>ملاحظة:</strong> يوجد رسم آخر مشهور بكتابتها على الواو: <span class="example-highlight">رؤوس، شؤون</span>.
+                        </div>
+                    </div>
                 </div>
 
-                <!-- الجدول الملخص المحدث -->
-                <h3 style="margin-top: 30px; color: #2c3e50;">جدول ملخص حالات الهمزة المتوسطة</h3>
+                <div class="rule-card">
+                    <div class="rule-number green-num">5</div>
+                    <div class="rule-body">
+                        <h3>الهمزة المفتوحة</h3>
+                        <div class="sub-rules-grid two-col">
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">بدون ألف مد</div>
+                                <div class="sub-rule-result">حرف يناسب ما قبلها</div>
+                                <div class="sub-rule-examples">سأل، لؤي، يجأر</div>
+                            </div>
+                            <div class="sub-rule-item">
+                                <div class="sub-rule-label">بعدها ألف مد</div>
+                                <div class="sub-rule-result">نبرة (إن اتصل) / السطر</div>
+                                <div class="sub-rule-examples">مكافئات، جزءان</div>
+                            </div>
+                        </div>
+                        <div class="golden-rule-box">
+                            ⭐ <strong>الرسم الأفضل والمشهور:</strong> تعويضها بـ ألف مدة (آ) — مثل: <span class="example-highlight">مكافآت، قرآن</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الجدول الملخص -->
+                <div class="table-section-title">
+                    <h3>📊 جدول ملخص حالات الهمزة المتوسطة</h3>
+                </div>
                 <div class="table-responsive">
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <table>
                         <thead>
-                            <tr style="background: #27ae60; color: white;">
-                                <th>نوع الهمزة</th>
+                            <tr>
                                 <th>حالة الهمزة</th>
                                 <th>ما قبل الهمزة</th>
                                 <th>قاعدة الرسم</th>
@@ -181,262 +298,531 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>المتوسطة</td><td>مكسورة</td><td>ساكن أو متحرك</td><td>على نبرة</td><td>أسئلة، سُئِل</td><td>الكسرة أقوى الحركات</td></tr>
-                            <tr><td>المتوسطة</td><td>ساكنة</td><td>مكسور</td><td>على نبرة</td><td>بِئْر، ذِئْب</td><td>تناسبها الياء</td></tr>
-                            <tr><td>المتوسطة</td><td>مضمومة/مفتوحة</td><td>ياء ساكنة</td><td>على نبرة</td><td>شيئُك، هيئة</td><td>الياء تعامل كالكسرة</td></tr>
-                            <tr><td>المتوسطة</td><td>مضمومة (+مد)</td><td>حرف يتصل</td><td>على نبرة</td><td>مسئول، شئون</td><td>حسب الرسم الشائع</td></tr>
-                            <tr><td>المتوسطة</td><td>ساكنة</td><td>مضموم</td><td>على الواو</td><td>يُؤْمن، مُؤْمن</td><td>الضمة أقوى من السكون</td></tr>
-                            <tr><td>المتوسطة</td><td>مضمومة</td><td>مضموم/مفتوح</td><td>على الواو</td><td>يَرُؤُف، التَرُؤُس</td><td>في حال عدم وجود مد</td></tr>
+                            <tr><td><span class="badge badge-blue">مكسورة</span></td><td>ساكن أو متحرك</td><td>على نبرة</td><td><span class="example-highlight">أسئلة، سُئِل</span></td><td>الكسرة أقوى الحركات</td></tr>
+                            <tr><td><span class="badge badge-gray">ساكنة</span></td><td>مكسور</td><td>على نبرة</td><td><span class="example-highlight">بِئْر، ذِئْب</span></td><td>تناسبها الياء</td></tr>
+                            <tr><td><span class="badge badge-green">مضمومة/مفتوحة</span></td><td>ياء ساكنة</td><td>على نبرة</td><td><span class="example-highlight">شيئُك، هيئة</span></td><td>الياء تعامل كالكسرة</td></tr>
+                            <tr><td><span class="badge badge-green">مضمومة (+مد)</span></td><td>حرف يتصل</td><td>على نبرة</td><td><span class="example-highlight">مسئول، شئون</span></td><td>حسب الرسم الشائع</td></tr>
+                            <tr><td><span class="badge badge-gray">ساكنة</span></td><td>مضموم</td><td>على الواو</td><td><span class="example-highlight">يُؤْمن، مُؤْمن</span></td><td>الضمة أقوى من السكون</td></tr>
+                            <tr><td><span class="badge badge-orange">مضمومة</span></td><td>مضموم/مفتوح</td><td>على الواو</td><td><span class="example-highlight">يَرُؤُف</span></td><td>في حال عدم وجود مد</td></tr>
                         </tbody>
                     </table>
                 </div>
+
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="openTabByName('lesson-intro')">→ العودة للمقدمة</button>
+                    <button class="btn btn-primary" onclick="openTabByName('end-hamza')">التالي: الهمزة المتطرفة ←</button>
+                </div>
             </div>
         </section>
 
-        <!-- التبويب الثالث: الهمزة المتطرفة (إعادة بناء شاملة) -->
+        <!-- ═══════════════════════════════════════════════
+             التبويب الثالث: الهمزة المتطرفة
+        ════════════════════════════════════════════════ -->
         <section id="end-hamza" class="tab-content">
             <div class="card">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h2 style="color: #2c3e50; display: inline-block; border-bottom: 3px solid #e67e22; padding-bottom: 10px;">الهمزة المتطرفة</h2>
-                    <p style="font-size: 1.1rem; color: #666; mt-2">دليل شامل لقواعد رسم الهمزة في آخر الكلمة</p>
-                </div>
-
-                <div class="rule-card" style="border-right-color: #e67e22; background: #fffaf5;">
-                    <p style="font-size: 1.1rem; line-height: 1.8;">
-                        تُعرف <strong>الهمزة المتطرفة</strong> بأنها الهمزة التي تقع في آخر الكلمة حقيقةً، وتُرسم دائماً بحسب 
-                        <span style="color: #e67e22; font-weight: bold;">حركة الحرف الذي يسبقها مباشرةً</span>.
-                    </p>
-                </div>
-
-                <!-- الحالة الأولى -->
-                <div class="rule-card">
-                    <h3 style="color: #d35400;">1. إذا كان ما قبلها متحركاً (عليه حركة)</h3>
-                    <p>في هذه الحالة، تُرسم الهمزة على حرف يناسب حركة الحرف الذي قبلها:</p>
-                    <ul class="sub-rule">
-                        <li><strong>على الألف:</strong> إذا كان ما قبلها مفتوحاً. <br>أمثلة: (<span class="example-highlight">قرأَ</span>، <span class="example-highlight">أنبأَ</span>، <span class="example-highlight">يلجأَ</span>).</li>
-                        <li><strong>على الواو:</strong> إذا كان ما قبلها مضموماً. <br>أمثلة: (<span class="example-highlight">تكافُؤ</span>، <span class="example-highlight">تباطُؤ</span>).</li>
-                        <div class="note-box" style="background: #fdf2f2; border-color: #fab1a0; color: #c0392b;">
-                            ⚠️ <strong>استثناء:</strong> إذا كان ما قبلها واواً مشددة مضمومة، تُرسم <span class="example-highlight">مفردة على السطر</span> كراهية اجتماع واوين. <br>مثال: (<span class="example-highlight">التبوُّء</span>).
-                        </div>
-                        <li style="margin-top:15px;"><strong>على نبرة (ياء):</strong> إذا كان ما قبلها مكسوراً. <br>أمثلة: (<span class="example-highlight">المبتدِئ</span>، <span class="example-highlight">المستهزِئ</span>، <span class="example-highlight">القارِئ</span>).</li>
-                    </ul>
-                </div>
-
-                <!-- الحالة الثانية -->
-                <div class="rule-card">
-                    <h3 style="color: #d35400;">2. إذا كان ما قبلها ساكناً</h3>
-                    <p>تُرسم <strong>مفردة على السطر</strong> إذا كان الحرف الذي يسبقها ساكناً (سواء كان حرفاً صحيحاً أو حرف مد):</p>
-                    <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
-                        أمثلة: (<span class="example-highlight">دفْء</span>، <span class="example-highlight">بطْء</span>، <span class="example-highlight">شيْء</span>، <span class="example-highlight">فيْء</span>، <span class="example-highlight">النشوء</span>).
+                <div class="tab-header orange-header">
+                    <div class="tab-header-icon">🔚</div>
+                    <div>
+                        <h2>الهمزة المتطرفة</h2>
+                        <p>الهمزة التي تقع في آخر الكلمة — المفتاح هو حركة الحرف الذي قبلها</p>
                     </div>
                 </div>
 
-                <!-- الحالة الثالثة -->
-                <div class="rule-card">
-                    <h3 style="color: #d35400;">3. حالات خاصة (الهمزة المتطرفة عرضاً)</h3>
-                    <ul class="sub-rule">
-                        <li>
-                            <strong>حكم الهمزة المتوسطة:</strong> تأخذ الهمزة المتطرفة حكم الهمزة المتوسطة أصالةً في حالات معينة، مثل الفعل الناقص المهموز العين؛ فتُرسم الهمزة على ما كانت عليه قبل حذف آخر الفعل.
-                            <br>أمثلة: (<span class="example-highlight">لتنأَ عن الشر</span>، وأنا <span class="example-highlight">أنأى</span> عن الأذى).
-                        </li>
-                        <li style="margin-top:10px;">
-                            <strong>اسم الفاعل الثلاثي:</strong> تُعتبر الهمزة فيه متطرفة وتُرسم <span class="example-highlight">مفردة على السطر</span> لوقوعها بعد الألف.
-                            <br>مثال: (<span class="example-highlight">جاء</span>، <span class="example-highlight">شاء</span>).
-                        </li>
-                    </ul>
+                <div class="golden-rule-box large-rule">
+                    🔑 <strong>القاعدة الذهبية:</strong> تُرسم الهمزة المتطرفة دائماً بحسب <span style="text-decoration: underline; color: var(--accent-color);">حركة الحرف الذي يسبقها مباشرةً</span> — وليس حركتها هي.
                 </div>
 
-                <!-- قاعدة ذهبية -->
-                <div class="note-box" style="text-align: center; font-size: 1.1rem; border: 2px solid #e67e22;">
-                    💡 <strong>المفتاح الأساسي:</strong> لكتابة الهمزة المتطرفة هو النظر 
-                    <span style="text-decoration: underline;">فقط</span> إلى حركة الحرف الذي يسبقها، إلا في حالات الاستثناء المذكورة.
+                <div class="rule-card">
+                    <div class="rule-number orange-num">1</div>
+                    <div class="rule-body">
+                        <h3>إذا كان ما قبلها متحركاً</h3>
+                        <div class="sub-rules-grid three-col">
+                            <div class="sub-rule-item highlight-gold">
+                                <div class="sub-rule-label">ما قبلها مفتوح</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">الألف</span></div>
+                                <div class="sub-rule-examples">قرأَ، أنبأَ، يلجأَ</div>
+                            </div>
+                            <div class="sub-rule-item highlight-purple">
+                                <div class="sub-rule-label">ما قبلها مضموم</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">الواو</span></div>
+                                <div class="sub-rule-examples">تكافُؤ، تباطُؤ</div>
+                            </div>
+                            <div class="sub-rule-item highlight-blue">
+                                <div class="sub-rule-label">ما قبلها مكسور</div>
+                                <div class="sub-rule-result">على <span class="example-highlight">نبرة</span></div>
+                                <div class="sub-rule-examples">المبتدِئ، القارِئ</div>
+                            </div>
+                        </div>
+                        <div class="warning-box">
+                            ⚠️ <strong>استثناء:</strong> إذا كان ما قبلها واواً مشددة مضمومة، تُرسم <span class="example-highlight">مفردة على السطر</span> كراهية اجتماع واوين. مثال: <span class="example-highlight">التبوُّء</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-card">
+                    <div class="rule-number orange-num">2</div>
+                    <div class="rule-body">
+                        <h3>إذا كان ما قبلها ساكناً</h3>
+                        <p>تُرسم <strong>مفردة على السطر</strong> إذا كان الحرف الذي يسبقها ساكناً (سواء كان حرفاً صحيحاً أو حرف مد):</p>
+                        <div class="examples-row">
+                            <span class="example-badge">دفْء</span>
+                            <span class="example-badge">بطْء</span>
+                            <span class="example-badge">شيْء</span>
+                            <span class="example-badge">فيْء</span>
+                            <span class="example-badge">النشوء</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-card">
+                    <div class="rule-number orange-num">3</div>
+                    <div class="rule-body">
+                        <h3>حالات خاصة (الهمزة المتطرفة عرضاً)</h3>
+                        <ul class="styled-list">
+                            <li>
+                                <strong>حكم الهمزة المتوسطة:</strong> تأخذ الهمزة حكم الهمزة المتوسطة أصالةً في حالات معينة.
+                                <div class="examples-row" style="margin-top:8px;">
+                                    <span class="example-badge">لتنأَ عن الشر</span>
+                                    <span class="example-badge">أنأى</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:15px;">
+                                <strong>اسم الفاعل الثلاثي:</strong> تُرسم <span class="example-highlight">مفردة على السطر</span> لوقوعها بعد الألف.
+                                <div class="examples-row" style="margin-top:8px;">
+                                    <span class="example-badge">جاء</span>
+                                    <span class="example-badge">شاء</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- بطاقة مقارنة سريعة -->
+                <div class="compare-card">
+                    <h3>⚡ مقارنة سريعة: متوسطة vs متطرفة</h3>
+                    <div class="compare-grid">
+                        <div class="compare-col green-col">
+                            <h4>🔤 المتوسطة</h4>
+                            <p>تعتمد على <strong>حركتها وحركة ما قبلها</strong> معاً</p>
+                        </div>
+                        <div class="compare-vs">VS</div>
+                        <div class="compare-col orange-col">
+                            <h4>🔚 المتطرفة</h4>
+                            <p>تعتمد على <strong>حركة الحرف قبلها فقط</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="openTabByName('middle-hamza')">→ الهمزة المتوسطة</button>
+                    <button class="btn btn-primary" onclick="openTabByName('media-tab')">التالي: الوسائط التعليمية ←</button>
                 </div>
             </div>
         </section>
 
-        <!-- التبويب الرابع: فيديوهات وصوتيات (النسخة الكاملة بـ 3 أقسام) -->
+        <!-- ═══════════════════════════════════════════════
+             التبويب الرابع: فيديوهات وصوتيات
+        ════════════════════════════════════════════════ -->
         <section id="media-tab" class="tab-content">
             <div class="card">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h2 style="color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; display: inline-block;">🎬 مكتبة الوسائط والملفات التعليمية</h2>
-                    <p style="color: #7f8c8d; margin-top: 10px;">شرح مرئي وصوتي بالإضافة إلى ملخصات جاهزة للتحميل</p>
+                <div class="tab-header blue-header">
+                    <div class="tab-header-icon">🎬</div>
+                    <div>
+                        <h2>مكتبة الوسائط التعليمية</h2>
+                        <p>شرح مرئي وصوتي بالإضافة إلى ملخصات جاهزة للتحميل</p>
+                    </div>
                 </div>
 
-                <!-- الجزء الأول: الصوتيات -->
-                <div class="media-section" style="margin-bottom: 50px;">
-                    <h3 style="color: #2980b9; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.5rem;">🎧</span> أولاً: الشرح الصوتي (Audio)
-                    </h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                        <div class="rule-card" style="border-right-color: #3498db; margin-bottom: 0;">
-                            <h4 style="margin-top: 0; color: #2c3e50;">الهمزة المتوسطة (صوت)</h4>
-                            <audio controls style="width: 100%; margin-top: 15px;">
-                                <source src="assets/middle-hamza-audio.mp3" type="audio/mpeg">
-                            </audio>
+                <!-- قسم الصوتيات -->
+                <div class="media-section-header">
+                    <span class="media-section-icon">🎧</span>
+                    <h3>أولاً: الشرح الصوتي</h3>
+                </div>
+                <div class="audio-grid">
+                    <div class="audio-card green-border">
+                        <div class="audio-card-header">
+                            <span class="audio-icon">🟢</span>
+                            <h4>الهمزة المتوسطة</h4>
                         </div>
-                        <div class="rule-card" style="border-right-color: #e67e22; margin-bottom: 0;">
-                            <h4 style="margin-top: 0; color: #2c3e50;">الهمزة المتطرفة (صوت)</h4>
-                            <audio controls style="width: 100%; margin-top: 15px;">
-                                <source src="assets/end-hamza-audio.mp3" type="audio/mpeg">
-                            </audio>
+                        <audio controls style="width: 100%; margin-top: 12px;">
+                            <source src="assets/middle-hamza-audio.mp3" type="audio/mpeg">
+                            متصفحك لا يدعم تشغيل الصوت.
+                        </audio>
+                    </div>
+                    <div class="audio-card orange-border">
+                        <div class="audio-card-header">
+                            <span class="audio-icon">🟠</span>
+                            <h4>الهمزة المتطرفة</h4>
+                        </div>
+                        <audio controls style="width: 100%; margin-top: 12px;">
+                            <source src="assets/end-hamza-audio.mp3" type="audio/mpeg">
+                            متصفحك لا يدعم تشغيل الصوت.
+                        </audio>
+                    </div>
+                </div>
+
+                <!-- قسم الفيديوهات -->
+                <div class="media-section-header" style="margin-top: 40px;">
+                    <span class="media-section-icon">📽️</span>
+                    <h3>ثانياً: الشرح المرئي</h3>
+                </div>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <div class="video-card-title">
+                            <span>🟢</span> الهمزة المتوسطة
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/2axHNgei6xw?si=aE1b8IJ9_u4VQiDv"
+                                title="شرح الهمزة المتوسطة"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-card-title">
+                            <span>🟠</span> الهمزة المتطرفة
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/zHrsrm4sYQA?si=DSzjaV6zfx_wW3P4"
+                                title="شرح الهمزة المتطرفة"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
 
-                <!-- الجزء الثاني: الفيديوهات -->
-                <div class="media-section" style="margin-bottom: 50px;">
-                    <h3 style="color: #c0392b; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.5rem;">📽️</span> ثانياً: الشرح المرئي (Video)
-                    </h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
-                        <div class="video-item" style="background: #f8f9fa; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
-                            <h4 style="text-align: center; margin-bottom: 15px;">الهمزة المتوسطة (فيديو)</h4>
-                            <div style="position: relative; padding-top: 56.25%; border-radius: 8px; overflow: hidden; background: #000;">
-                                <iframe src="https://www.youtube.com/embed/2axHNgei6xw?si=aE1b8IJ9_u4VQiDv" title="شرح الهمزة المتوسطة" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                            </div>
-                        </div>
-                        <div class="video-item" style="background: #f8f9fa; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
-                            <h4 style="text-align: center; margin-bottom: 15px;">الهمزة المتطرفة (فيديو)</h4>
-                            <div style="position: relative; padding-top: 56.25%; border-radius: 8px; overflow: hidden; background: #000;">
-                                <iframe src="https://www.youtube.com/embed/zHrsrm4sYQA?si=DSzjaV6zfx_wW3P4" title="شرح الهمزة المتطرفة" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                            </div>
-                        </div>
-                    </div>
+                <!-- قسم PDF -->
+                <div class="media-section-header" style="margin-top: 40px;">
+                    <span class="media-section-icon">📄</span>
+                    <h3>ثالثاً: الملفات والمطبوعات</h3>
+                </div>
+                <div class="pdf-download-card">
+                    <div class="pdf-icon-wrap">📥</div>
+                    <h4>الملخص الشامل لقواعد الهمزة</h4>
+                    <p>قم بتحميل الملف بصيغة PDF للحصول على شرح كامل ومنظم لجميع حالات الهمزة المتوسطة والمتطرفة، شاملاً الجداول المرجعية والأمثلة التوضيحية.</p>
+                    <a href="assets/lesson-summary.pdf" class="btn btn-success btn-lg" download>
+                        📥 تحميل الشرح الكامل (PDF)
+                    </a>
                 </div>
 
-                <!-- الجزء الثالث: تحميل ملف PDF (القسم الجديد) -->
-                <div class="media-section">
-                    <h3 style="color: #27ae60; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.5rem;">📄</span> ثالثاً: الملفات والمطبوعات (PDF)
-                    </h3>
-                    <div style="background: #f0fdf4; border: 2px dashed #27ae60; padding: 30px; border-radius: 15px; text-align: center;">
-                        <div style="font-size: 3.5rem; margin-bottom: 15px;">📥</div>
-                        <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 1.3rem;">الملخص الشامل لقواعد الهمزة</h4>
-                        <p style="color: #666; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                            قم بتحميل الملف بصيغة PDF للحصول على شرح كامل ومنظم لجميع حالات الهمزة المتوسطة والمتطرفة، شاملاً الجداول المرجعية والأمثلة التوضيحية، ليكون مرجعاً لك في أي وقت.
-                        </p>
-                        <a href="assets/lesson-summary.pdf" 
-                           class="btn" 
-                           style="background: #27ae60; color: white; padding: 15px 40px; text-decoration: none; border-radius: 30px; font-weight: bold; display: inline-block; transition: 0.3s; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2);" 
-                           download>
-                            تحميل الشرح الكامل (PDF)
-                        </a>
-                    </div>
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="openTabByName('end-hamza')">→ الهمزة المتطرفة</button>
+                    <button class="btn btn-primary" onclick="openTabByName('quiz-tab')">التالي: ابدأ الاختبار ←</button>
                 </div>
             </div>
         </section>
 
-        <!-- التبويب الخامس: الاختبار الشامل -->
+        <!-- ═══════════════════════════════════════════════
+             التبويب الخامس: الاختبار الشامل
+        ════════════════════════════════════════════════ -->
         <section id="quiz-tab" class="tab-content">
             <div class="card quiz-app-container">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h2 style="color: #2c3e50; border-bottom: 3px solid #f1c40f; padding-bottom: 10px; display: inline-block;">🧠 الاختبار الشامل لقواعد الهمزة</h2>
-                    <p style="color: #7f8c8d;">أجب عن جميع الأسئلة ثم اضغط على زر "عرض النتيجة" في الأسفل</p>
+                <div class="tab-header yellow-header">
+                    <div class="tab-header-icon">🧠</div>
+                    <div>
+                        <h2>الاختبار الشامل لقواعد الهمزة</h2>
+                        <p>أجب عن جميع الأسئلة ثم اضغط على زر "عرض النتيجة" في الأسفل</p>
+                    </div>
+                </div>
+
+                <!-- شريط التقدم في الاختبار -->
+                <div class="quiz-progress-wrap">
+                    <div class="quiz-progress-label">
+                        <span>تقدمك في الاختبار</span>
+                        <span id="quiz-progress-text">0 / 7 سؤال</span>
+                    </div>
+                    <div class="quiz-progress-track">
+                        <div class="quiz-progress-fill" id="quizProgressBar" style="width:0%"></div>
+                    </div>
                 </div>
 
                 <form id="master-quiz-form">
+
                     <!-- السؤال الأول: صح وخطأ -->
                     <div class="quiz-section">
-                        <h3 class="quiz-section-title">أولاً: ضع علامة (✓) أو (✗)</h3>
+                        <div class="quiz-section-title">
+                            <span class="quiz-section-icon">✔️</span>
+                            أولاً: ضع علامة (✓) أو (✗)
+                        </div>
+
                         <div class="question-item" data-qtype="tf" data-correct="false">
-                            <p>1. تُرسم الهمزة المتطرفة على "واو" إذا كان ما قبلها مضموماً، مثل كلمة (تبوُّء).</p>
-                            <div class="options">
-                                <label><input type="radio" name="q1" value="true"> ✓ صح</label>
-                                <label><input type="radio" name="q1" value="false"> ✗ خطأ</label>
+                            <div class="question-num">1</div>
+                            <p class="question-text">تُرسم الهمزة المتطرفة على "واو" إذا كان ما قبلها مضموماً، مثل كلمة (تبوُّء).</p>
+                            <div class="options tf-options">
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="true" onchange="updateQuizProgress()">
+                                    <span class="option-box">✓ صح</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="false" onchange="updateQuizProgress()">
+                                    <span class="option-box">✗ خطأ</span>
+                                </label>
                             </div>
-                            <div class="explanation hidden">التصحيح: تُرسم مفردة على السطر كراهية اجتماع واوين؛ لأن ما قبلها واو مشددة مضمومة.</div>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">💡</span>
+                                <strong>التصحيح:</strong> تُرسم مفردة على السطر كراهية اجتماع واوين؛ لأن ما قبلها واو مشددة مضمومة.
+                            </div>
                         </div>
 
                         <div class="question-item" data-qtype="tf" data-correct="true">
-                            <p>2. تُرسم الهمزة المتوسطة دائماً على نبرة إذا كانت مكسورة، مهما كانت حركة الحرف الذي قبلها.</p>
-                            <div class="options">
-                                <label><input type="radio" name="q2" value="true"> ✓ صح</label>
-                                <label><input type="radio" name="q2" value="false"> ✗ خطأ</label>
+                            <div class="question-num">2</div>
+                            <p class="question-text">تُرسم الهمزة المتوسطة دائماً على نبرة إذا كانت مكسورة، مهما كانت حركة الحرف الذي قبلها.</p>
+                            <div class="options tf-options">
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="true" onchange="updateQuizProgress()">
+                                    <span class="option-box">✓ صح</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="false" onchange="updateQuizProgress()">
+                                    <span class="option-box">✗ خطأ</span>
+                                </label>
                             </div>
-                            <div class="explanation hidden">إجابة صحيحة: الكسرة هي أقوى الحركات.</div>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">✅</span>
+                                <strong>إجابة صحيحة:</strong> الكسرة هي أقوى الحركات.
+                            </div>
                         </div>
 
                         <div class="question-item" data-qtype="tf" data-correct="false">
-                            <p>3. إذا كانت الهمزة المتوسطة ساكنة وما قبلها مفتوح، تُرسم على واو مثل كلمة (بأس).</p>
-                            <div class="options">
-                                <label><input type="radio" name="q3" value="true"> ✓ صح</label>
-                                <label><input type="radio" name="q3" value="false"> ✗ خطأ</label>
+                            <div class="question-num">3</div>
+                            <p class="question-text">إذا كانت الهمزة المتوسطة ساكنة وما قبلها مفتوح، تُرسم على واو مثل كلمة (بأس).</p>
+                            <div class="options tf-options">
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="true" onchange="updateQuizProgress()">
+                                    <span class="option-box">✓ صح</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="false" onchange="updateQuizProgress()">
+                                    <span class="option-box">✗ خطأ</span>
+                                </label>
                             </div>
-                            <div class="explanation hidden">التصحيح: تُرسم على ألف لأنها تتبع جنس حركة ما قبلها (الفتحة).</div>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">💡</span>
+                                <strong>التصحيح:</strong> تُرسم على ألف لأنها تتبع جنس حركة ما قبلها (الفتحة).
+                            </div>
                         </div>
                     </div>
 
-                    <!-- السؤال الثاني: اختيار من متعدد -->
+                    <!-- اختيار من متعدد -->
                     <div class="quiz-section">
-                        <h3 class="quiz-section-title">ثانياً: اختر الإجابة الصحيحة</h3>
+                        <div class="quiz-section-title">
+                            <span class="quiz-section-icon">🔘</span>
+                            ثانياً: اختر الإجابة الصحيحة
+                        </div>
+
                         <div class="question-item" data-qtype="mcq" data-correct="ياء ساكنة">
-                            <p>4. تُرسم الهمزة المتوسطة في كلمة (هيئة) على نبرة لأنها مسبوقة بـ .......</p>
-                            <select name="q4">
-                                <option value="">اختر الإجابة...</option>
-                                <option value="ألف مد">ألف مد</option>
-                                <option value="ياء ساكنة">ياء ساكنة</option>
-                                <option value="واو ساكنة">واو ساكنة</option>
-                            </select>
-                            <div class="explanation hidden">السبب: الياء الساكنة تعامل معاملة الكسرة وتناسبها النبرة.</div>
+                            <div class="question-num">4</div>
+                            <p class="question-text">تُرسم الهمزة المتوسطة في كلمة (هيئة) على نبرة لأنها مسبوقة بـ .........</p>
+                            <div class="options">
+                                <select name="q4" class="styled-select" onchange="updateQuizProgress()">
+                                    <option value="">— اختر الإجابة —</option>
+                                    <option value="ألف مد">ألف مد</option>
+                                    <option value="ياء ساكنة">ياء ساكنة</option>
+                                    <option value="واو ساكنة">واو ساكنة</option>
+                                </select>
+                            </div>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">💡</span>
+                                <strong>السبب:</strong> الياء الساكنة تعامل معاملة الكسرة وتناسبها النبرة.
+                            </div>
                         </div>
 
                         <div class="question-item" data-qtype="mcq" data-correct="قرآن">
-                            <p>5. الرسم الأفضل والمشهور لكلمة (قرأان) هو .......</p>
-                            <select name="q5">
-                                <option value="">اختر الإجابة...</option>
-                                <option value="قرءان">قرءان</option>
-                                <option value="قرآن">قرآن</option>
-                                <option value="قرأان">قرأان</option>
-                            </select>
-                            <div class="explanation hidden">السبب: يتم حذف صورة الهمزة وتعويضها بمدّة (آ).</div>
+                            <div class="question-num">5</div>
+                            <p class="question-text">الرسم الأفضل والمشهور لكلمة (قرأان) هو .........</p>
+                            <div class="options">
+                                <select name="q5" class="styled-select" onchange="updateQuizProgress()">
+                                    <option value="">— اختر الإجابة —</option>
+                                    <option value="قرءان">قرءان</option>
+                                    <option value="قرآن">قرآن</option>
+                                    <option value="قرأان">قرأان</option>
+                                </select>
+                            </div>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">💡</span>
+                                <strong>السبب:</strong> يتم حذف صورة الهمزة وتعويضها بمدّة (آ).
+                            </div>
                         </div>
                     </div>
 
-                    <!-- السؤال الثالث: أكمل الفراغات -->
+                    <!-- أكمل الفراغات -->
                     <div class="quiz-section">
-                        <h3 class="quiz-section-title">ثالثاً: أكمل الفراغات التالية</h3>
+                        <div class="quiz-section-title">
+                            <span class="quiz-section-icon">✏️</span>
+                            ثالثاً: أكمل الفراغات التالية
+                        </div>
+
                         <div class="question-item" data-qtype="fill" data-correct="يسبقها">
-                            <p>6. تُرسم الهمزة المتطرفة بناءً على حركة الحرف الذي <input type="text" name="q6" placeholder="..."> فقط.</p>
-                            <div class="explanation hidden">الإجابة الصحيحة: يسبقها (أو الذي قبلها).</div>
+                            <div class="question-num">6</div>
+                            <p class="question-text">
+                                تُرسم الهمزة المتطرفة بناءً على حركة الحرف الذي
+                                <input type="text" name="q6" class="fill-input" placeholder="أكمل الجواب..." oninput="updateQuizProgress()">
+                                فقط.
+                            </p>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">✅</span>
+                                <strong>الإجابة الصحيحة:</strong> يسبقها (أو: قبلها).
+                            </div>
                         </div>
 
                         <div class="question-item" data-qtype="fill" data-correct="نبرة">
-                            <p>7. إذا سُبقت الهمزة المتوسطة بياء ساكنة، تُرسم دائماً على <input type="text" name="q7" placeholder="...">.</p>
-                            <div class="explanation hidden">الإجابة الصحيحة: نبرة.</div>
+                            <div class="question-num">7</div>
+                            <p class="question-text">
+                                إذا سُبقت الهمزة المتوسطة بياء ساكنة، تُرسم دائماً على
+                                <input type="text" name="q7" class="fill-input" placeholder="أكمل الجواب..." oninput="updateQuizProgress()">
+                                .
+                            </p>
+                            <div class="explanation hidden">
+                                <span class="exp-icon">✅</span>
+                                <strong>الإجابة الصحيحة:</strong> نبرة.
+                            </div>
                         </div>
                     </div>
 
                     <div style="text-align: center; margin-top: 40px;">
-                        <button type="button" onclick="calculateMasterScore()" class="btn" style="background:#2c3e50; font-size:1.2rem; padding: 15px 50px;">عرض النتيجة النهائية 📋</button>
+                        <button type="button" onclick="calculateMasterScore()" class="btn btn-dark btn-xl">
+                            عرض النتيجة النهائية 📋
+                        </button>
                     </div>
                 </form>
 
                 <!-- منطقة النتيجة -->
-                <div id="master-result-area" class="hidden" style="margin-top: 30px; padding: 20px; border-radius: 15px; text-align: center; background: #f8f9fa; border: 2px solid #2c3e50;">
-                    <h3 id="score-text" style="font-size: 1.5rem; margin-bottom: 10px;">نتيجتك هي: 0 / 7</h3>
-                    <p id="grade-comment"></p>
-                    <button onclick="location.reload()" class="btn" style="background:#7f8c8d; margin-top:10px;">إعادة الاختبار 🔄</button>
+                <div id="master-result-area" class="hidden result-area">
+                    <div class="result-emoji" id="result-emoji">🏆</div>
+                    <h3 id="score-text">نتيجتك هي: 0 / 7</h3>
+                    <div class="score-bar-wrap">
+                        <div class="score-bar" id="score-bar"></div>
+                    </div>
+                    <p id="grade-comment" class="grade-comment"></p>
+                    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            🔄 إعادة الاختبار
+                        </button>
+                        <button onclick="openTabByName('middle-hamza')" class="btn btn-primary">
+                            📚 مراجعة القواعد
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
+    <!-- فوتر -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="logo-placeholder small">لغتي</div>
+                <span>منصة لغتي التعليمية</span>
+            </div>
+            <p>إعداد وتطوير: <strong>محمد مصطفى</strong> | درس قواعد الهمزة — الصف الأول الإعدادي</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
     <script>
-        // وظيفة التبديل بين التبويبات
+        // ═══ منطق التبويبات ═══
         function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
+            document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+            document.querySelectorAll(".tab-btn").forEach(tb => tb.classList.remove("active"));
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openTabByName(tabName) {
+            document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+            document.querySelectorAll(".tab-btn").forEach(tb => tb.classList.remove("active"));
+            document.getElementById(tabName).classList.add("active");
+            const idx = ['lesson-intro','middle-hamza','end-hamza','media-tab','quiz-tab'].indexOf(tabName);
+            if (idx >= 0) document.querySelectorAll(".tab-btn")[idx].classList.add("active");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ═══ شريط تقدم القراءة ═══
+        window.addEventListener('scroll', () => {
+            const doc = document.documentElement;
+            const progress = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+            document.getElementById('readingProgress').style.width = Math.min(progress, 100) + '%';
+        });
+
+        // ═══ تقدم الاختبار ═══
+        function updateQuizProgress() {
+            const questions = document.querySelectorAll('.question-item');
+            let answered = 0;
+            questions.forEach(q => {
+                const type = q.getAttribute('data-qtype');
+                if (type === 'tf') { if (q.querySelector('input[type="radio"]:checked')) answered++; }
+                else if (type === 'mcq') { if (q.querySelector('select').value) answered++; }
+                else if (type === 'fill') { if (q.querySelector('input[type="text"]').value.trim()) answered++; }
+            });
+            const total = questions.length;
+            document.getElementById('quiz-progress-text').textContent = `${answered} / ${total} سؤال`;
+            document.getElementById('quizProgressBar').style.width = (answered / total * 100) + '%';
+        }
+
+        // ═══ حساب النتيجة ═══
+        function calculateMasterScore() {
+            let score = 0;
+            const questions = document.querySelectorAll('.question-item');
+            const total = questions.length;
+
+            questions.forEach(q => {
+                const type = q.getAttribute('data-qtype');
+                const correct = q.getAttribute('data-correct');
+                let isCorrect = false;
+
+                if (type === 'tf') {
+                    const sel = q.querySelector('input[type="radio"]:checked');
+                    if (sel && sel.value === correct) isCorrect = true;
+                } else if (type === 'mcq') {
+                    if (q.querySelector('select').value === correct) isCorrect = true;
+                } else if (type === 'fill') {
+                    const val = q.querySelector('input[type="text"]').value.trim();
+                    if (val === correct || (correct === 'يسبقها' && val === 'قبلها')) isCorrect = true;
+                }
+
+                q.classList.toggle('correct-answer', isCorrect);
+                q.classList.toggle('wrong-answer', !isCorrect);
+                const exp = q.querySelector('.explanation');
+                if (exp) exp.classList.remove('hidden');
+                if (isCorrect) score++;
+            });
+
+            displayFinalResult(score, total);
+        }
+
+        function displayFinalResult(score, total) {
+            const area = document.getElementById('master-result-area');
+            const scoreText = document.getElementById('score-text');
+            const comment = document.getElementById('grade-comment');
+            const emoji = document.getElementById('result-emoji');
+            const bar = document.getElementById('score-bar');
+            const pct = Math.round((score / total) * 100);
+
+            area.classList.remove('hidden');
+            scoreText.innerHTML = `نتيجتك النهائية: <span class="score-num">${score}</span> من <span>${total}</span>`;
+            bar.style.width = pct + '%';
+            bar.style.background = pct === 100 ? '#27ae60' : pct >= 70 ? '#f1c40f' : '#e74c3c';
+
+            if (score === total) {
+                emoji.textContent = '🏆'; comment.textContent = 'ممتاز! أنت تتقن قواعد الهمزة بنسبة 100%.';
+                area.className = area.className.replace(/result-\w+/,'') + ' result-excellent';
+            } else if (score >= total * 0.7) {
+                emoji.textContent = '✨'; comment.textContent = 'رائع! مستواك جيد جداً، راجع الأخطاء البسيطة لتكتمل معرفتك.';
+                area.className = area.className.replace(/result-\w+/,'') + ' result-good';
+            } else if (score >= total * 0.5) {
+                emoji.textContent = '👍'; comment.textContent = 'جيد، لكنك تحتاج لقراءة القواعد مرة أخرى والتركيز على الاستثناءات.';
+                area.className = area.className.replace(/result-\w+/,'') + ' result-average';
+            } else {
+                emoji.textContent = '📚'; comment.textContent = 'لا تقلق، الإملاء يحتاج لممارسة. شاهد الفيديوهات مرة أخرى وحاول مجدداً.';
+                area.className = area.className.replace(/result-\w+/,'') + ' result-weak';
+            }
+
+            area.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

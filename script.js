@@ -1,120 +1,153 @@
 /**
  * نظام إدارة درس الهمزة التفاعلي
+ * النسخة المطورة
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Lesson Ready!");
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("✅ Lesson Ready!");
+
+    // تعيين شريط التقدم ليبدأ من الصفر
+    updateQuizProgress();
 });
 
 /**
- * أولاً: منطق التبديل بين التبويبات
+ * التبديل بين التبويبات
  */
 function openTab(evt, tabName) {
-    // إخفاء جميع محتويات التبويبات
-    const tabContent = document.getElementsByClassName("tab-content");
-    for (let i = 0; i < tabContent.length; i++) {
-        tabContent[i].classList.remove("active");
-        tabContent[i].style.display = "none";
-    }
-
-    // إزالة كلاس active من جميع الأزرار
-    const tabLinks = document.getElementsByClassName("tab-btn");
-    for (let i = 0; i < tabLinks.length; i++) {
-        tabLinks[i].classList.remove("active");
-    }
-
-    // إظهار التبويب المطلوب وإضافة كلاس active للزر الذي ضغط عليه المستخدم
-    const activeTab = document.getElementById(tabName);
-    activeTab.style.display = "block";
-    setTimeout(() => { activeTab.classList.add("active"); }, 10);
+    document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(tb => tb.classList.remove("active"));
+    document.getElementById(tabName).classList.add("active");
     evt.currentTarget.classList.add("active");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-    // التمرير لأعلى الصفحة عند الانتقال لتبويب جديد
+function openTabByName(tabName) {
+    document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(tb => tb.classList.remove("active"));
+    const target = document.getElementById(tabName);
+    if (target) target.classList.add("active");
+
+    const tabOrder = ['lesson-intro', 'middle-hamza', 'end-hamza', 'media-tab', 'quiz-tab'];
+    const idx = tabOrder.indexOf(tabName);
+    const buttons = document.querySelectorAll(".tab-btn");
+    if (idx >= 0 && buttons[idx]) buttons[idx].classList.add("active");
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /**
- * ثانياً: منطق الاختبار الشامل
+ * تحديث شريط تقدم الاختبار
+ */
+function updateQuizProgress() {
+    const questions = document.querySelectorAll('.question-item');
+    let answered = 0;
+
+    questions.forEach(q => {
+        const type = q.getAttribute('data-qtype');
+        if (type === 'tf') {
+            if (q.querySelector('input[type="radio"]:checked')) answered++;
+        } else if (type === 'mcq') {
+            const sel = q.querySelector('select');
+            if (sel && sel.value) answered++;
+        } else if (type === 'fill') {
+            const inp = q.querySelector('input[type="text"]');
+            if (inp && inp.value.trim()) answered++;
+        }
+    });
+
+    const total = questions.length;
+    const progressText = document.getElementById('quiz-progress-text');
+    const progressBar = document.getElementById('quizProgressBar');
+
+    if (progressText) progressText.textContent = `${answered} / ${total} سؤال`;
+    if (progressBar) progressBar.style.width = total > 0 ? (answered / total * 100) + '%' : '0%';
+}
+
+/**
+ * حساب النتيجة الشاملة
  */
 function calculateMasterScore() {
     let score = 0;
     const questions = document.querySelectorAll('.question-item');
-    const totalQuestions = questions.length;
+    const total = questions.length;
 
-    questions.forEach((q, index) => {
+    questions.forEach(q => {
         const type = q.getAttribute('data-qtype');
-        const correctAnswer = q.getAttribute('data-correct');
-        let userIsCorrect = false;
+        const correct = q.getAttribute('data-correct');
+        let isCorrect = false;
 
-        // 1. معالجة أسئلة صح وخطأ
         if (type === 'tf') {
-            const selected = q.querySelector('input[type="radio"]:checked');
-            if (selected) {
-                if (selected.value === correctAnswer) {
-                    userIsCorrect = true;
-                }
-            }
-        } 
-        // 2. معالجة أسئلة الاختيار من متعدد
-        else if (type === 'mcq') {
-            const selectMenu = q.querySelector('select');
-            if (selectMenu.value === correctAnswer) {
-                userIsCorrect = true;
-            }
-        } 
-        // 3. معالجة أسئلة إكمال الفراغات
-        else if (type === 'fill') {
-            const userInput = q.querySelector('input[type="text"]').value.trim();
-            // مقارنة مرنة للنصوص العربية (إزالة المسافات الزائدة)
-            if (userInput === correctAnswer || (correctAnswer === 'يسبقها' && userInput === 'قبلها')) {
-                userIsCorrect = true;
-            }
+            const sel = q.querySelector('input[type="radio"]:checked');
+            if (sel && sel.value === correct) isCorrect = true;
+        } else if (type === 'mcq') {
+            const sel = q.querySelector('select');
+            if (sel && sel.value === correct) isCorrect = true;
+        } else if (type === 'fill') {
+            const val = q.querySelector('input[type="text"]').value.trim();
+            if (val === correct || (correct === 'يسبقها' && val === 'قبلها')) isCorrect = true;
         }
 
-        // تطبيق التنسيق البصري بناءً على الإجابة
-        if (userIsCorrect) {
-            score++;
-            q.classList.add('correct-answer');
-            q.classList.remove('wrong-answer');
-        } else {
-            q.classList.add('wrong-answer');
-            q.classList.remove('correct-answer');
-        }
+        q.classList.toggle('correct-answer', isCorrect);
+        q.classList.toggle('wrong-answer', !isCorrect);
 
-        // إظهار التفسير/التصحيح لكل سؤال
         const exp = q.querySelector('.explanation');
         if (exp) exp.classList.remove('hidden');
+
+        if (isCorrect) score++;
     });
 
-    // عرض النتيجة النهائية
-    displayFinalResult(score, totalQuestions);
+    displayFinalResult(score, total);
 }
 
 /**
- * ثالثاً: عرض النتيجة النهائية وتعديل الواجهة
+ * عرض النتيجة النهائية
  */
 function displayFinalResult(score, total) {
-    const resultArea = document.getElementById('master-result-area');
-    const scoreDisplay = document.getElementById('score-text');
-    const commentDisplay = document.getElementById('grade-comment');
+    const area = document.getElementById('master-result-area');
+    const scoreText = document.getElementById('score-text');
+    const comment = document.getElementById('grade-comment');
+    const emoji = document.getElementById('result-emoji');
+    const bar = document.getElementById('score-bar');
+    const pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    resultArea.classList.remove('hidden');
-    scoreDisplay.innerHTML = `نتيجتك النهائية هي: <span style="color:#27ae60; font-size:2rem;">${score}</span> من ${total}`;
+    if (!area) return;
 
-    // رسالة تقييم بناءً على الدرجة
-    let comment = "";
-    if (score === total) {
-        comment = "🏆 ممتاز! أنت تتقن قواعد الهمزة بنسبة 100%.";
-    } else if (score >= total * 0.7) {
-        comment = "✨ رائع! مستواك جيد جداً، راجع الأخطاء البسيطة لتكتمل معرفتك.";
-    } else if (score >= total * 0.5) {
-        comment = "👍 جيد، لكنك تحتاج لقراءة القواعد مرة أخرى والتركيز على الاستثناءات.";
-    } else {
-        comment = "📚 لا تقلق، الإملاء يحتاج لممارسة. شاهد الفيديوهات مرة أخرى وحاول مجدداً.";
+    area.classList.remove('hidden', 'result-excellent', 'result-good', 'result-average', 'result-weak');
+
+    if (scoreText) {
+        scoreText.innerHTML = `نتيجتك النهائية: <span class="score-num">${score}</span> من <span>${total}</span>`;
     }
 
-    commentDisplay.innerText = comment;
+    if (bar) {
+        bar.style.width = pct + '%';
+        bar.style.background = pct === 100 ? '#27ae60' : pct >= 70 ? '#f1c40f' : '#e74c3c';
+    }
 
-    // التمرير التلقائي لمنطقة النتيجة
-    resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    let commentText = '';
+    let emojiChar = '📚';
+    let resultClass = 'result-weak';
+
+    if (score === total) {
+        emojiChar = '🏆';
+        commentText = 'ممتاز! أنت تتقن قواعد الهمزة بنسبة 100%.';
+        resultClass = 'result-excellent';
+    } else if (score >= total * 0.7) {
+        emojiChar = '✨';
+        commentText = 'رائع! مستواك جيد جداً، راجع الأخطاء البسيطة لتكتمل معرفتك.';
+        resultClass = 'result-good';
+    } else if (score >= total * 0.5) {
+        emojiChar = '👍';
+        commentText = 'جيد، لكنك تحتاج لقراءة القواعد مرة أخرى والتركيز على الاستثناءات.';
+        resultClass = 'result-average';
+    } else {
+        emojiChar = '📚';
+        commentText = 'لا تقلق، الإملاء يحتاج لممارسة. شاهد الفيديوهات مرة أخرى وحاول مجدداً.';
+        resultClass = 'result-weak';
+    }
+
+    if (emoji) emoji.textContent = emojiChar;
+    if (comment) comment.textContent = commentText;
+    area.classList.add(resultClass);
+
+    area.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
